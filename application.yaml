@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: 
+  name: first-argo-pipeline
+  namespace: argocd
+spec:
+  project: default
+
+  source: 
+    repoURL: https://github.com/Pardiuman/kubernetes.git
+    targetRevision: HEAD
+    path: ./
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: html-app
+  syncPolicy: 
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      prune: true
+      selfHeal: true
