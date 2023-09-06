@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: html-deploy
+  labels:
+    app: html
+spec:
+  selector:
+    matchLabels:
+      app: html
+  replicas: 2
+  template:
+    metadata: 
+      labels: 
+        app: html
+    spec:
+      containers:
+        - name: html-image
+          image: pardiuman/custom-signin
+          ports:
+            - containerPort: 80
+          # volumeMounts:
+          #   - name: html-css-volume
+          #     mountPath: /usr/share/nginx/html
+      # initContainers:
+      #   - name: sidebox
+      #     image: busybox
+      #     command: ["sh", "-c", "chmod -R 755 /usr/share/nginx/html"]
+      #     volumeMounts:
+      #       - name: html-css-volume
+      #         mountPath: /usr/share/nginx/html
+      # volumes:
+      #   - name: html-css-volume
+      #     hostPath:
+      #       path: /usr/share/nginx/html
+      
+  
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: html-service
+spec:
+  selector:
+    app: html
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001
+  type: NodePort
