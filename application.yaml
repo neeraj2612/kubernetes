@@ -7,7 +7,7 @@ spec:
   project: default
 
   source: 
-    repoURL: https://github.com/Pardiuman/kubernetes.git
+    repoURL: https://github.com/neeraj2612/new-repo.git
     targetRevision: HEAD
     path: demo
   destination: 
